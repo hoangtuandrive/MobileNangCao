@@ -34,7 +34,7 @@ const App = () => {
                 <TouchableOpacity
                   style={styles.buttonAmount}
                   onPress={() => {
-                    amount > 1 && setAmount(amount - 1);
+                    -amount > 1 && setAmount(amount - 1);
                   }}
                 >
                   <Text style={styles.buttonTextAmount}>-</Text>
