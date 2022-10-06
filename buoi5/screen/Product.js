@@ -1,21 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
-export default function Product() {
-  const navigation = useNavigation();
-  const onPress = () => {
-    navigation.navigate("Option");
-  };
+export default function Product({ navigation }) {
+  const route = useRoute();
+  const imgDefault = require("../assets/vsmart_live_xanh1.png");
+  const [url, setUrl] = useState(imgDefault);
+  useEffect(() => {
+    if (route.params != null) setUrl(route.params.url);
+  });
+
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../assets/vsmart_live_xanh1.png")}
-        style={styles.image}
-      ></Image>
+      <Image source={url} style={styles.image}></Image>
       <Text style={styles.text}>Điện Thoại Vsmart Joy 3 - Hàng chính hãng</Text>
       <View stlye={styles.starRow}>
         <View style={styles.starGroup}>
@@ -49,7 +49,10 @@ export default function Product() {
           <Text style={styles.redText}>Ở ĐÂU RẺ HƠN HOÀN TIỀN</Text>
           <EvilIcons name="question" size={24} color="black" />
         </View>
-        <TouchableOpacity style={styles.buttonSelect} onPress={onPress}>
+        <TouchableOpacity
+          style={styles.buttonSelect}
+          onPress={() => navigation.navigate("Option", { url: url })}
+        >
           <Text>4 MÀU-CHỌN MÀU</Text>
           <MaterialIcons name="navigate-next" size={24} color="black" />
         </TouchableOpacity>
@@ -67,10 +70,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 1,
     alignSelf: "center",
-    width: 100,
-    maxHeight: 200,
+    width: 170,
+    height: 200,
   },
   text: {
     textAlign: "center",
@@ -135,7 +137,6 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     padding: 10,
     backgroundColor: "red",
-    color: "white",
   },
   whiteText: {
     color: "white",
